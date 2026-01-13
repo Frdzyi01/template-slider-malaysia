@@ -18,6 +18,19 @@ body {
   height: 100%;
   background: #f5f5f5;
   box-shadow: 0 30px 50px #dbdbdb;
+  transition: background-image 0.5s ease-in-out; /* Smooth transition */
+}
+/* Mask/overlay logic can be added if text readability is an issue */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dim the background image */
+  z-index: 0;
+  pointer-events: none;
 }
 
 .container .slide .item {
@@ -134,4 +147,180 @@ body {
 .button button:hover {
   background: #ababab;
   color: #fff;
+}
+
+/* Mobile Layout Style */
+.mobile-header {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  color: #dcb356;
+  /* Using a gold/yellow color similar to the screenshot */
+  font-family: system-ui;
+  font-weight: bold;
+}
+
+.mobile-header .logo {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-header .logo i {
+  color: #555; /* Darker icon color if needed */
+}
+
+.mobile-header .menu-icon {
+  font-size: 24px;
+  color: #dcb064;
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
+
+  .container {
+    /* Background removed as requested */
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Ensure no scrolling */
+  }
+
+  .container .slide .item {
+    width: 160px; /* Smaller cards for mobile */
+    height: 220px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    opacity: 0.5; /* Fade out non-active items */
+  }
+
+  /* Item 1 - Left (Hidden or very faded) */
+  .slide .item:nth-child(1) {
+    top: 50%;
+    left: 0%; /* Move mostly off-screen */
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+
+  /* Item 2 - Center (Active) */
+  .slide .item:nth-child(2) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2); /* Make it pop */
+    opacity: 1;
+    z-index: 10;
+    border-radius: 15px;
+    width: 180px;
+    height: 250px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Item 3 - Right (Hidden or very faded) */
+  .slide .item:nth-child(3) {
+    top: 50%;
+    left: 100%; /* Move mostly off-screen */
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+
+  /* Item 4 and others - Hidden offscreen */
+  .slide .item:nth-child(4),
+  .slide .item:nth-child(5),
+  .slide .item:nth-child(n + 6) {
+    left: 200%;
+    opacity: 0;
+  }
+
+  /* Content Styling for Mobile */
+  .item .content {
+    display: none;
+  }
+
+  /* Content for Active Item (2nd) */
+  /* Content for Active Item (2nd) */
+  .slide .item:nth-child(2) .content {
+    display: block;
+    position: absolute;
+    top: 100%; /* Push below card */
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px; /* Wider canvas for text */
+    text-align: center;
+    padding: 15px 0 0 0;
+    box-sizing: border-box;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .content .name {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #fff;
+    opacity: 1;
+    animation: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .content .des {
+    font-size: 10px;
+    color: #dedede;
+    opacity: 1;
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    animation: none;
+    max-height: 40px; /* Limit height */
+    overflow: hidden;
+  }
+
+  .content button {
+    padding: 5px 12px;
+    font-size: 10px;
+    opacity: 1;
+    animation: none;
+    margin-top: 0;
+  }
+
+  /* Navigation Buttons - Flanking the center card */
+  .button {
+    width: 100%;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    bottom: auto; /* Override bottom positioning */
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  .button button {
+    pointer-events: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .button button:hover {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+  }
 }
